@@ -40,7 +40,7 @@ This repository includes scripts for:
 ## Web Access
 
 An interactive version of the EVOKE resource is available at:  
-:contentReference[oaicite:0]{index=0}
+(https://bio-bigdata.hrbmu.edu.cn/evoke/)
 
 ## Notes
 
