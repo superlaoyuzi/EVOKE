@@ -57,7 +57,7 @@ A small example from **GSE239676** is provided to demonstrate EVOKE's workflow u
 | `Pt10_P` | `GSM7669807` | Primary gastric tumor | Primary | 1,200 |
 | `Pt10_Li` | `GSM7669806` | Liver metastasis | Metastasis | 1,200 |
 
-The supplied [`example_data.zip`](example_data.zip) contains **3,600 preselected cells** in three 10x-style gene-by-cell UMI-count matrices (`matrix.mtx.gz`, `features.tsv.gz`, and `barcodes.tsv.gz` for each sample). These are processed expression counts, **not raw sequencing FASTQ files**. The three samples represent different disease states of one patient, not three longitudinal collection time points. The subset is intended to demonstrate the workflow rather than reproduce the full EVOKE database results.
+The supplied [`example_data.zip`](example_data.zip) contains **3,600 preselected cells** in three 10x-style gene-by-cell UMI-count matrices (`matrix.mtx.gz`, `features.tsv.gz`, and `barcodes.tsv.gz` for each sample). For this example, **1,200 cells were randomly selected from each of the three original tissue samples** (3,600 cells in total). These are subsampled cells provided for demonstration and do not represent the total number of cells in the original samples.
 
 ### Run the Pt-10 example
 
@@ -82,17 +82,8 @@ source("scripts/06_GO_BP_and_AvgRichFactor.R")
 
 **Step 0** automatically reads and extracts `example_data.zip`, combines the three samples with their progression-state metadata, and saves `data/Pt10_merged_raw.rds` for **Step 1**. **Step 1** performs quality control and cell-type annotation and writes `outputs/stage1/STAD_Pt-10_after_cell_annotation.rds`. The subsequent steps save their results under `outputs/`. There is no need to unzip the example archive or enter sample paths manually.
 
-For optional manual review of cell-type assignments, Step 1 also generates `outputs/stage1/STAD_Pt-10_cluster_celltype_review.csv`. The `reviewed_label` column can be filled only where a correction is supported by marker evidence; rerun Step 1 after making any changes. Blank labels retain the automatic annotation.
+Example parameters are specified in [`config/settings.R`](config/settings.R). The workflow requires Seurat and its associated R dependencies, as well as packages used in later steps (including Augur, Slingshot, tradeSeq, and clusterProfiler) and the bundled scType resources. The example is not a substitute for the complete multi-patient, multi-cancer production analysis: in particular, a single patient is insufficient to estimate meaningful cross-patient recurrence scores. 
 
-Example parameters are specified in [`config/settings.R`](config/settings.R). The workflow requires Seurat and its associated R dependencies, as well as packages used in later steps (including Augur, Slingshot, tradeSeq, and clusterProfiler) and the bundled scType resources. The example is not a substitute for the complete multi-patient, multi-cancer production analysis: in particular, a single patient is insufficient to estimate meaningful cross-patient recurrence scores. The packaged workflow has not yet been independently validated end to end in an R environment; please verify the generated outputs before using it for reproduction claims.
-
-## Data Processing and Reproducibility
-
-EVOKE applies a standardized, sample-wise analysis strategy. Samples are processed individually, and the resulting annotations and progression-associated events are harmonized at the database level by cancer type, species, progression state, cell type, dataset, and sample identity. This database-level harmonization should not be confused with merging cells from unrelated studies into one corrected expression matrix.
-
-For the bundled Pt-10 example, the expression matrices and matched sample metadata are already supplied; Step 0 prepares the input for downstream analysis. For other datasets, prepare gene-by-cell expression matrices and matched metadata, including sample identifiers, species, tissue source, cancer type, and progression-state annotations, and update the relevant configuration and input paths. The example workflow runs from data preparation (Step 0) to preprocessing (Step 1), cellular events (Step 2), trajectory analysis (Step 3), and molecular analyses (Steps 4–6).
-
-For source-data accessions, preprocessing criteria, statistical definitions, software versions, and interpretation of outputs, refer to the **Methods** and **Supplementary Materials** of the associated EVOKE manuscript. The analysis scripts should be used with the finalized production settings corresponding to the reported release.
 
 ## Web Access
 
