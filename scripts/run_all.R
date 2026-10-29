@@ -1,0 +1,10 @@
+# Run every example step in order from the repository root.
+source("scripts/00_prepare_pt10.R")
+source("scripts/01_preprocess_and_annotate.R")
+source("scripts/02_cellular_events.R")
+source("scripts/03_trajectory_events.R")
+source("scripts/04_1_key_genes_in_progression.R")
+source("scripts/04_2_trajectory_associated_genes.R")
+source("scripts/05_recurrence_and_trajectory_similarity.R")
+source("scripts/06_GO_BP_and_AvgRichFactor.R")
+sessionInfo()
